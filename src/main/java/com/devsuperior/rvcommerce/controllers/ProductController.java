@@ -1,16 +1,14 @@
 package com.devsuperior.rvcommerce.controllers;
 
 import com.devsuperior.rvcommerce.dto.ProductDTO;
-import com.devsuperior.rvcommerce.entities.Product;
-import com.devsuperior.rvcommerce.repositories.ProductRepository;
 import com.devsuperior.rvcommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @RestController
 @RequestMapping(value = "/products")
@@ -24,6 +22,15 @@ public class ProductController {
         return service.findById(id);
     }
 
+    @GetMapping
+    public Page<ProductDTO> findAll(Pageable pageable){
+        return service.findAll(pageable);
+    }
 
+    @PostMapping
+    public ProductDTO insert(@RequestBody ProductDTO dto){
+        dto = service.insert(dto);
+        return dto;
+    }
 
 }
